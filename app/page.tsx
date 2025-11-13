@@ -26,7 +26,7 @@ export default function Home() {
               <div className="mt-6 flex gap-3">
                 <Button>
                   {" "}
-                  <Link href="/dashboard">Open dashboard</Link>
+                  <Link href="/dashboard">Get Started</Link>
                 </Button>
                 <Button>
                   {" "}

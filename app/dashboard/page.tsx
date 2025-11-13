@@ -12,6 +12,19 @@ export default async function ProtectedPage() {
     redirect("/auth/login");
   }
 
+  // Ensure the user belongs to an organisation. If not, send them to org setup.
+  const userId = data.claims.sub;
+  const { data: membership } = await supabase
+    .from("organisation_members")
+    .select("organisation_id, role")
+    .eq("user_id", userId)
+    .limit(1)
+    .maybeSingle();
+
+  if (!membership) {
+    redirect("/organisation");
+  }
+
   // Fetch initial tasks (server-side)
   const { data: tasks } = await supabase.from("tasks").select("*").order("created_at", { ascending: false }).limit(100);
 
